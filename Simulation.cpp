@@ -29,7 +29,7 @@ void SimulationEngine::run()
 {
     // spawn threads
     vector<thread> threads;
-    // threads.push_back( thread( &SimulationEngine::syncThreads, this ) );
+    threads.push_back( thread( &SimulationEngine::syncThreads, this ) );
     threads.push_back( thread( &SimulationEngine::processQueue, this, FLYING ) );
     threads.push_back( thread( &SimulationEngine::processQueue, this, CHARGING ) );
     threads.push_back( thread( &SimulationEngine::processQueue, this, WAITING ) );
@@ -43,7 +43,7 @@ void SimulationEngine::run()
         g_syncPoint.arrive_and_wait();
         // move waiting vtols
         g_syncPoint.arrive_and_wait();
-        // g_tickTiming.arrive_and_wait();
+        g_tickTiming.arrive_and_wait();
     }    
 
     for( int i = 0; i < threads.size(); ++i )
